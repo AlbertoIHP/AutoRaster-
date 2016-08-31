@@ -42,18 +42,18 @@ class metaData(object):
 	
 	#Devuelve el cos(90 - SUN_ELEVATION)
 	def getCos(self):
-		getAngle = (90 - self.getSunElevation)
+		getAngle = (90 - self.getSunElevation())
 		radian_angle = (math.pi)/(getAngle)
 		return math.cos(radian_angle)
 		
 	#Devuelve la distancia del sol al cuadrado
 	def getCuadraticDistance(self):
-		return self.getEarthDistance*self.getEarthDistance
+		return self.getEarthDistance()*self.getEarthDistance()
 		
 	#Devuelve el ESUN
 	def getESUN(self):
-		esun_upper = math.pi*self.getCuadraticDistance
-		esun_lowerr = (self.getMaxRadiance)/(self.getMaxReflectance)
+		esun_upper = math.pi*self.getCuadraticDistance()
+		esun_lowerr = (self.getMaxRadiance())/(self.getMaxReflectance())
 		esun = esun_upper/esun_lowerr
 		return esun
 	
@@ -554,14 +554,14 @@ class rasterCalculator(object):
 				pixelDN = x_tuple[i]
 				
 				#PRIMERO CALCULAMOS Llanda
-				Llanda = (raster.metadata.getRadianceMult*pixelDN) + raster.metadata.getRadianceAdd
+				Llanda = (raster.metadata.getRadianceMult()*pixelDN) + raster.metadata.getRadianceAdd()
 				
 				#SEGUNDO CALCULAMOS Lmin
-				Lmin = (raster.metadata.getRadianceMult*raster.metadata.getMinQuantizeCal) + raster.metadata.getRadianceAdd
+				Lmin = (raster.metadata.getRadianceMult()*raster.metadata.getMinQuantizeCal()) + raster.metadata.getRadianceAdd()
 				
 				#TERCERO CALCULAMOS Ldos
-				Ldos_upper = (0.01)*(raster.metadata.getESUN)*(raster.metadata.getCos)
-				Ldos_lower = (math.pi)*raster.metadata.getCuadraticDistance
+				Ldos_upper = (0.01)*(raster.metadata.getESUN())*(raster.metadata.getCos())
+				Ldos_lower = (math.pi)*raster.metadata.getCuadraticDistance()
 				Ldos = Ldos_upper/Ldos_lower
 				
 				#CUARTO CALCULAMOS Lp
@@ -569,8 +569,8 @@ class rasterCalculator(object):
 				
 				#QUINTO Y ULTIMO CALCULAMOS DOS1
 				difference = Llanda - Lp
-				dos1_upper = (math.pi)*difference*raster.metadata.getCuadraticDistance
-				dos1_lower = (raster.metadata.getESUN)*raster.metadata.getCos
+				dos1_upper = (math.pi)*difference*raster.metadata.getCuadraticDistance()
+				dos1_lower = (raster.metadata.getESUN())*raster.metadata.getCos()
 				#dos1 = dos1_upper/dos1_lower
 				
 				#Lo comentado corresponde al antiguo proceso de conversion a reflectancia (incompleto)
